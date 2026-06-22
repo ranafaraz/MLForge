@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlforge"
+version = "0.1.0"
+description = "Leakage-safe tabular model-selection forge: proper pipelining buys a preprocessing-leakage correction, nested cross-validation buys a selection-bias correction -- measured against a held-out oracle with a random-label null."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Rana Faraz" }]
+keywords = [
+  "machine-learning", "model-selection", "cross-validation", "nested-cv",
+  "data-leakage", "automl", "scikit-learn", "tabular",
+]
+classifiers = [
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+# Numpy is the only runtime dependency: the estimators, preprocessing and
+# cross-validation are all implemented from scratch on top of it. No model
+# downloads, no API keys -- CI runs the whole benchmark offline.
+dependencies = ["numpy>=1.23"]
+
+[project.optional-dependencies]
+# Optional cross-check backend: mirror the forge with scikit-learn's own
+# Pipeline / GridSearchCV / cross_val_score to confirm the numbers agree.
+sklearn = ["scikit-learn>=1.1"]
+dev = [
+  "pytest>=7.0",
+  "ruff>=0.1",
+]
+
+[project.scripts]
+mlforge = "mlforge.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ranafaraz/MLForge"
+Repository = "https://github.com/ranafaraz/MLForge"
+
+[tool.setuptools.packages.find]
+include = ["mlforge*", "evals*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E741"]
+
+[tool.ruff.lint.per-file-ignores]
+# __init__ pins BLAS threads via os.environ *before* importing numpy-backed
+# submodules, so those imports legitimately sit below executable code.
+"mlforge/__init__.py" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
