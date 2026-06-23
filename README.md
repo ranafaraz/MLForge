@@ -1,5 +1,9 @@
 # MLForge
 
+[![Live demo](https://img.shields.io/badge/live%20demo-mlforge.dexdevs.com-brightgreen?logo=rocket)](https://mlforge.dexdevs.com)
+
+> **▶ Live demo: [mlforge.dexdevs.com](https://mlforge.dexdevs.com)** — run it in your browser, free offline backend. Browse all 10 portfolio demos via the *all demos* link.
+
 [![CI](https://github.com/ranafaraz/MLForge/actions/workflows/ci.yml/badge.svg)](https://github.com/ranafaraz/MLForge/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://github.com/ranafaraz/MLForge)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
